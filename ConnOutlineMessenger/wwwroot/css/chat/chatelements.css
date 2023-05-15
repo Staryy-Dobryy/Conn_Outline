@@ -1,0 +1,95 @@
+﻿#image-feald {
+    display: inline-flex;
+    width: 90%;
+    box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 5px;
+    background-color: #353434;
+}
+
+#image-feald > h2 {
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    margin: auto 1em;
+}
+
+#image-feald > img {
+    width: 7em;
+    height: 7em;
+}
+
+#chat-feald {
+    width: 90%;
+    height: 72vh;
+    margin: 0 auto;
+    box-shadow: inset rgba(0, 0, 0, 0.3) 1px 1px 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#chat-feald {
+    background-color: #353434;
+}
+
+#input-feald {
+    display: inline-flex;
+    width: 90%;
+    margin: 0;
+    padding: 0em;
+}
+
+#message {
+    width: 100%;
+    padding: 0.5em;
+    transition: 0.25s;
+}
+
+#message:hover {
+    background-color: #323030;
+    box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 5px;
+    transform: translateY(-1%);
+}
+#message:hover > #message-sender > #delete-button {
+    opacity: 1;
+}
+
+#message > #message-sender {
+    width: 100%;
+    display: inline-flex;
+}
+
+#message > #message-sender > * {
+    margin: auto 0.2em;
+}
+
+
+#message > #message-sender > img {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 100%;
+    box-shadow: 1px 1px 1px;
+}
+#message > #message-sender > #delete-button {
+    border: none;
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    outline: none;
+}
+#message > #message-sender > #delete-button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+#message-content {
+    margin-top: 0;
+}
+
+#message > #message-content {
+    text-align: left;
+}
+
+#message > #message-content > p {
+    margin: 0 0 0 3.2em;
+    padding: 0;
+}
