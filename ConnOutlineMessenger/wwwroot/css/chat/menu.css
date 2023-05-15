@@ -1,0 +1,124 @@
+﻿#menu-items {
+    background: linear-gradient(70deg, #6f1011, #882426);
+    border-radius: 15px;
+    box-shadow: black 5px 5px 10px;
+    position: fixed;
+    width: 0;
+    height: 70%;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    transition: 0.3s;
+}
+
+#menu-items > * {
+    display: none;
+    text-align: center;
+    margin: 0;
+    opacity: 0;
+}
+
+#menu-items > hr {
+    background: linear-gradient(to left, rgba(194, 149, 69, 0) 5%, rgba(194, 149, 69, 0.9) 50%, rgba(194, 149, 69, 0) 95%);
+}
+
+#menu-items > button {
+    padding-top: 1em;
+    border: none;
+    width: 100%;
+    background-color: rgba(0,0,0,0);
+    outline: none;
+    padding-bottom: 1em;
+    transition: 0.3s;
+}
+
+#menu-items > button:hover {
+    background-color: #6d1214;
+    transition: 0.15s;
+}
+
+#menu-items > button:active {
+    background-color: #681012;
+    color: #dedcdc;
+}
+
+#menu {
+    height: 95%;
+    width: 5px;
+    background-color: #C29545;
+    position: absolute;
+    border-radius: 5px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+/*LEFT MENU*/
+#menu-left > #menu {
+    left: 0;
+    display: flex;
+    justify-content: left;
+}
+
+#menu-left {
+    height: 65%;
+    width: 2%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+#menu-left #menu-items {
+    margin-left: 1%;
+}
+
+#menu-left:hover #menu-items {
+    width: 20%;
+}
+
+#menu-left:hover #menu-items > * {
+    display: block;
+    animation: show-text 0.2s forwards 0.2s;
+}
+
+/*RIGHT MENU*/
+#menu-right #menu-items {
+    margin-right: 1%;
+}
+
+#menu-right > #menu {
+    right: 0;
+    display: flex;
+    justify-content: right;
+}
+
+#menu-right {
+    height: 65%;
+    width: 2%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+#menu-right:hover #menu-items {
+    width: 20%;
+}
+
+#menu-right:hover #menu-items > * {
+    display: block;
+    animation: show-text 0.2s forwards 0.2s;
+}
+
+@keyframes show-text {
+    0% {
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

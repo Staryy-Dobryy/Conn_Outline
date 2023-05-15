@@ -12,7 +12,7 @@ namespace ConnOutlineMessenger.EntityConfig
             builder.Property(x => x.Id).IsRequired();
 
             builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.Password).IsRequired().HasMaxLength(25);
+            builder.Property(x => x.Password).IsRequired();
             builder.Property(x => x.UserName).IsRequired().HasMaxLength(20);
 
             builder

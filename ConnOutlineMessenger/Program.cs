@@ -1,12 +1,12 @@
 using ConnOutlineMessenger.DataBaseStartup;
-using ConnOutlineMessenger.DBstur;
+using Microsoft.AspNetCore.Builder;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;
 
-builder.Services.Inject(configuration);
+builder.Services.AddDataBase(configuration);
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -19,20 +19,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var serviceProvider = scope.ServiceProvider;
-    try
-    {
-        var context = serviceProvider.GetRequiredService<EFcontext>();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-    }
-    catch (Exception exception)
-    {
-        throw exception;
-    }
-}
+app.Services.UseDataBase();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -44,5 +31,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "Chats",
+    pattern: "{controller=Chats}/{action=Chat}/{id?}");
 
 app.Run();

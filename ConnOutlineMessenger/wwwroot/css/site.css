@@ -1,18 +1,33 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
-
+* {
+    color: #cdc9c9;
+}
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #323030;
+}
+body::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+body::-webkit-scrollbar-track {
+    background: #5a5656;
+    border-radius: 50px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #242222;
+    border-radius: 50px;
 }

@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace ConnOutlineMessenger.DBstur
 {
-    public class EFcontext : DbContext
+    public class DataBaseContext : DbContext
     {
-        public EFcontext(DbContextOptions<EFcontext> options) : base(options) { }
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
@@ -18,7 +18,6 @@ namespace ConnOutlineMessenger.DBstur
             modelBuilder.ApplyConfiguration(new ChatConfig());
             modelBuilder.ApplyConfiguration(new MessageConfig());
             modelBuilder.ApplyConfiguration(new ImageConfig());
-
             base.OnModelCreating(modelBuilder);
         }
     }
