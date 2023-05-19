@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace ConnOutlineMessenger.DataAccess.Interfaces
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IChatRepository : IRepository<Chat>
     {
-        Task<User?> GetByUserNameAsync(string userName);
-        Task<User?> GetByEmailAsync(string email);
+
     }
 }
