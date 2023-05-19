@@ -1,4 +1,13 @@
-﻿#image-feald {
+﻿@media (min-width: 768px) {
+    #message > #message-sender > #delete-button {
+        right: 0;
+        position: absolute;
+        display: none;
+        opacity: 0;
+    }
+}
+
+#image-feald {
     display: inline-flex;
     width: 90%;
     box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 5px;
@@ -18,16 +27,13 @@
 }
 
 #chat-feald {
+    background-color: #353434;
     width: 90%;
     height: 72vh;
     margin: 0 auto;
     box-shadow: inset rgba(0, 0, 0, 0.3) 1px 1px 5px;
     overflow-x: hidden;
     overflow-y: auto;
-}
-
-#chat-feald {
-    background-color: #353434;
 }
 
 #input-feald {
@@ -49,6 +55,7 @@
     transform: translateY(-1%);
 }
 #message:hover > #message-sender > #delete-button {
+    display: block;
     opacity: 1;
 }
 
@@ -70,9 +77,6 @@
 }
 #message > #message-sender > #delete-button {
     border: none;
-    position: absolute;
-    right: 0;
-    opacity: 0;
     border-radius: 10px;
     background-color: rgba(0,0,0,0);
     transition: 0.2s;

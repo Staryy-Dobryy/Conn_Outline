@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "AccountLayout";
+    ViewData["Title"] = "Fast Registration";
+}
+<link rel="stylesheet" href="~/css/animatedBackground.css">
+<link rel="stylesheet" href="~/css/account/fastregistration.css">
+<ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<div id="registration-container" class="conn-bg-dark form-container">
+    <form method="post" action="/Account/FastRegistration" class="form-aunt">
+        <h2>Быстрая регистрация</h2>
+        <input type="text" placeholder="Your username" class="form-input" required>
+        <input type="submit" class="conn-bg-red conn-btn" value="Зарегистрироваться">
+    </form>
+</div>
