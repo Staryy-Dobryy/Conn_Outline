@@ -1,14 +1,16 @@
 ﻿using ConnOutlineMessenger.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace ConnOutlineMessenger.Controllers
 {
+    //[Authorize]
     public class ChatsController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ChatsController> _logger;
 
-        public ChatsController (ILogger<HomeController> logger)
+        public ChatsController (ILogger<ChatsController> logger)
         {
             _logger = logger;
         }

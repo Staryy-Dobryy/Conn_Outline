@@ -1,18 +1,21 @@
-﻿using ConnOutlineMessenger.DBstur;
+﻿using ConnOutlineMessenger.DataAccess.Interfaces;
+using ConnOutlineMessenger.DataAccess.Repositories;
+using ConnOutlineMessenger.DBstur;
+using ConnOutlineMessenger.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace ConnOutlineMessenger.DataBaseStartup
+namespace ConnOutlineMessenger.BuisnessLogic.Injecting
 {
-    public static class Injecting
+    public static class DataAccessInjecting
     {
         public static void AddDataBase(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(configuration["ConnectionString"]));
-            services.AddScoped<DataBaseContext>();
         }
+
         public static void UseDataBase(this IServiceProvider services)
         {
             using (var scope = services.CreateScope())
@@ -21,7 +24,6 @@ namespace ConnOutlineMessenger.DataBaseStartup
                 try
                 {
                     var context = serviceProvider.GetRequiredService<DataBaseContext>();
-                    context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
                 }
                 catch (Exception exception)
@@ -29,6 +31,13 @@ namespace ConnOutlineMessenger.DataBaseStartup
                     throw exception;
                 }
             }
+        }
+
+        public static void InjectRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IChatRepository, ChatRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
         }
     }
 }

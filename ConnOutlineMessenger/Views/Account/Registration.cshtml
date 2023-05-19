@@ -1,0 +1,62 @@
+﻿@model ConnOutlineMessenger.DTO.RegistrationViewModel
+
+@{
+    Layout = "AccountLayout";
+    ViewData["Title"] = "Registration";
+}
+<link rel="stylesheet" href="~/css/animatedBackground.css">
+<link rel="stylesheet" href="~/css/account/registration.css">
+<ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+@if(Model is not null && Model.Modal is true)
+{
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Подкорректируйте данные</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                @Html.ValidationMessageFor(model => model.UserName, null)
+                @Html.ValidationMessageFor(model => model.Email, null)
+                @Html.ValidationMessageFor(model => model.Password, null)
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, null)
+                @Html.ValidationMessageFor(model => model.Agreement, null)
+            </div>
+        </div>
+
+    </div>
+}
+<div id="registration-container" class="conn-bg-dark form-container">
+    <form asp-controller="Account" asp-action="Registration" class="form-aunt">
+        <h2>Регистрация</h2>
+        <input asp-for="UserName" type="text" placeholder="Your username" class="form-input">
+        <input asp-for="Email" type="email" placeholder="Email" class="form-input">
+        <input asp-for="Password" type="password" placeholder="Password" class="form-input">
+        <input asp-for="ConfirmPassword" type="password" placeholder="Confirm password" class="form-input">
+        <div class="form-check">
+            <input asp-for="Agreement" type="checkbox">
+            <label for="agreement">Я соглашаюсь с <a href="#">политикой бла-бла-бла...</a></label>
+        </div>
+        <input type="submit" class="conn-bg-red conn-btn" value="Зарегистрироваться">
+        <p>Или используйте <a href="/Account/FastRegistration">быструю регистрацию.</a></p>
+    </form>
+</div>

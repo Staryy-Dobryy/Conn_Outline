@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "AccountLayout";
+    ViewData["Title"] = "Login";
+}
+<link rel="stylesheet" href="~/css/animatedBackground.css">
+<link rel="stylesheet" href="~/css/account/login.css">
+<ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<div id="login-container" class="conn-bg-dark form-container">
+    <form method="post" action="/Account/Login" class="form-aunt">
+        <h2>Авторизация</h2>
+        <input type="email" placeholder="Email" class="form-input" required>
+        <input type="password" placeholder="Password" class="form-input" required>
+        <input type="submit" class="conn-bg-red conn-btn" value="Вход">
+        <p>Нужен аккаунт? <a href="/Account/Registration">Зарегестрируйтесь.</a></p>
+    </form>
+</div>

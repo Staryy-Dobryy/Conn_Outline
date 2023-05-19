@@ -10,67 +10,18 @@ using System.Threading.Tasks;
 
 namespace ConnOutlineMessenger.DataAccess.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private bool _disposedValue;
-        private readonly DataBaseContext _db;
-        public UserRepository(DataBaseContext db) => _db = db;
+        public UserRepository(DataBaseContext db) : base(db) { }
 
-        public async Task Create(User entity)
+        public async Task<User?> GetByEmailAsync(string email)
         {
-            await _db.Users.AddAsync(entity);
-            await _db.SaveChangesAsync();
+            return await _db.Set<User>().FirstOrDefaultAsync(x => x.Email == email);
         }
 
-        public async Task Delete(uint id)
+        public async Task<User?> GetByUserNameAsync(string userName)
         {
-            var user = await _db.Users.FindAsync(id);
-            if (user != null) _db.Users.Remove(user);
-            await _db.SaveChangesAsync();
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            return _db.Users;
-        }
-
-        public async Task<User?> GetByEmail(string email)
-        {
-            return await _db.Users.FirstOrDefaultAsync(x => x.Email == email);
-        }
-
-        public async Task<User?> GetById(uint id)
-        {
-            return await _db.Users.FindAsync(id);
-        }
-
-        public async Task<User?> GetByUserName(string userName)
-        {
-            return await _db.Users.FirstOrDefaultAsync(x => x.UserName == userName);
-        }
-
-        public async Task Update(User entity)
-        {
-            _db.Entry(entity).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    _db.Dispose();
-                }
-                _disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            return await _db.Set<User>().FirstOrDefaultAsync(x => x.UserName == userName);
         }
     }
 }
