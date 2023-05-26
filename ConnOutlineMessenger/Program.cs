@@ -1,6 +1,8 @@
 using ConnOutlineMessenger.BuisnessLogic.Injecting;
+using ConnOutlineMessenger.BuisnessLogic.Services.Realization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,28 +18,24 @@ builder.Services.AddDataBase(configuration);
 builder.Services.InjectServices();
 builder.Services.InjectRepositories();
 builder.Services.AddControllersWithViews();
-builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            // указывает, будет ли валидироваться издатель при валидации токена
-            ValidateIssuer = true,
-            // строка, представляющая издателя
-            ValidIssuer = AuthOptions.ISSUER,
-            // будет ли валидироваться потребитель токена
-            ValidateAudience = true,
-            // установка потребителя токена
-            ValidAudience = AuthOptions.AUDIENCE,
-            // будет ли валидироваться время существования
-            ValidateLifetime = true,
-            // установка ключа безопасности
-            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-            // валидация ключа безопасности
-            ValidateIssuerSigningKey = true,
-        };
-    });
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = AuthOptions.ISSUER,
+                    ValidAudience = AuthOptions.AUDIENCE,
+                    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -65,28 +63,10 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "Chats",
-    pattern: "{controller=Chats}/{action=Chat}/{id?}"
-    , (string username) =>
-    {
-        var claims = new List<Claim> { new Claim(ClaimTypes.Name, username) };
-        // создаем JWT-токен
-        var jwt = new JwtSecurityToken(
-                issuer: AuthOptions.ISSUER,
-                audience: AuthOptions.AUDIENCE,
-                claims: claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+    pattern: "{controller=Chats}/{action=Index}/{id?}");
 
-        return new JwtSecurityTokenHandler().WriteToken(jwt);
-    });
+app.MapControllerRoute(
+    name: "Menu",
+    pattern: "{controller=Menu}/{action=CreateChat}");
 
 app.Run();
-
-public class AuthOptions
-{
-    public const string ISSUER = "MyAuthServer"; // издатель токена
-    public const string AUDIENCE = "MyAuthClient"; // потребитель токена
-    const string KEY = "fff";   // ключ для шифрации
-    public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
-        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
-}

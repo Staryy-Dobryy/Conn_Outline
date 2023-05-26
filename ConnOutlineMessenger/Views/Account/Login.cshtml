@@ -23,11 +23,11 @@
     <li></li>
 </ul>
 <div id="login-container" class="conn-bg-dark form-container">
-    <form method="post" action="/Account/Login" class="form-aunt">
+    <div class="form-aunt">
         <h2>Авторизация</h2>
-        <input type="email" placeholder="Email" class="form-input" required>
-        <input type="password" placeholder="Password" class="form-input" required>
-        <input type="submit" class="conn-bg-red conn-btn" value="Вход">
+        <input type="email" placeholder="Email" class="form-input" required id="login-email">
+        <input type="password" placeholder="Password" class="form-input" required id="login-password">
+        <input type="submit" class="conn-bg-red conn-btn" value="Вход" onclick="login()">
         <p>Нужен аккаунт? <a href="/Account/Registration">Зарегестрируйтесь.</a></p>
-    </form>
+    </div>
 </div>

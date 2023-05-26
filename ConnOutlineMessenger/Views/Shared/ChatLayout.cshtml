@@ -14,9 +14,9 @@
         <div id="menu" class="ms-2">
             <div id="menu-items">
                 <hr>
-                <button><i class="fas fa-gear"></i>Настройки</button>
+                <button onclick="addFriendModal()"><i class="fa-solid fa-user"></i> Добавить друга</button>
                 <hr>
-                <i class="fa-duotone fa-gear"></i><button>Настройки</button>
+                <button onclick="createChatModal()"><i class="fa-solid fa-plus"></i> Добавить чат</button>
                 <hr>
                 <i class="fa-solid fa-gear"></i>
                 <p>Четвёртый итем</p>
@@ -35,10 +35,11 @@
         </div>
     </div>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
+    <div id="load-div"></div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

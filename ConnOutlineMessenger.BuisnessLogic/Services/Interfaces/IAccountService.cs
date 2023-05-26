@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConnOutlineMessenger.BuisnessLogic.Interfaces
+namespace ConnOutlineMessenger.BuisnessLogic.Services.Interfaces
 {
     public interface IAccountService
     {
