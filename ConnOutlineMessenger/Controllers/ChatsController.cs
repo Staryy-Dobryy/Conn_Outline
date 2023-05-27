@@ -29,6 +29,18 @@ namespace ConnOutlineMessenger.Controllers
         }
 
         [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Leave(string stringChatId)
+        {
+            string? tokenString = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var token = new JwtSecurityToken(tokenString);
+            var userId = uint.Parse(token.Payload["Id"].ToString());
+            var chatId = uint.Parse(stringChatId);
+            await _chatService.RemoveUserFromChat(userId, chatId);
+            return RedirectToAction("Index", "Chats");
+        }
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
