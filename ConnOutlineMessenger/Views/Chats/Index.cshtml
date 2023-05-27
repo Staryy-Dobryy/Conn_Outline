@@ -1,0 +1,37 @@
+﻿@model ConnOutlineMessenger.DTO.ChatsViewModel
+
+@{
+    Layout = "ChatLayout";
+    ViewData["Title"] = "Friends";
+}
+<link rel="stylesheet" href="~/css/chat/chatelements.css">
+<link rel="stylesheet" href="~/css/chat/scrollbar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="text-center">
+    <div class="conn-header conn-bg-dark">
+        <h1>YOUR CHATS</h1>
+        <h6>+добавить чат</h6>
+    </div>
+    <div id="chats-content" class="conn-scroll">
+        @if (Model.Chats == null)
+        {
+            <div id="chats-item">
+                <h4 align="center">У вас пока нету чатов</h4>
+            </div>
+        }
+        else
+        {
+            @foreach (var chat in Model.Chats)
+            {
+                <div class="loaded-chat">
+                    <div class="chats-item" id="@chat.Id" onclick="getdetails(this)">
+                        <img src="~/images/group-icon.png">
+                        <h5>@chat.CreationTime</h5>
+                    </div>
+                    <input type="button" class="delete-btn" id="@chat.Id" value="delete" onclick="deleteChat(this)">
+                </div>
+            }        
+        }
+    </div>
+</div>

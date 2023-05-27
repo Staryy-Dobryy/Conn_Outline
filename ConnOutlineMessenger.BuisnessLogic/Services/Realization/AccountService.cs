@@ -1,4 +1,4 @@
-﻿using ConnOutlineMessenger.BuisnessLogic.Interfaces;
+﻿using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
 using ConnOutlineMessenger.BuisnessLogic.Tools;
 using ConnOutlineMessenger.DataAccess.Interfaces;
 using ConnOutlineMessenger.Entities;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConnOutlineMessenger.BuisnessLogic.Services
+namespace ConnOutlineMessenger.BuisnessLogic.Services.Realization
 {
     public class AccountService : IAccountService
     {

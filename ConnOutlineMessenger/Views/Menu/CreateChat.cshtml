@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Conn Outline Messenger";
+}
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Подкорректируйте данные</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <input type="button" class="conn-btn conn-bg-red" value="create" onclick="createChat()">
+        </div>
+    </div>
+</div>
+<script>
+    // modal
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

@@ -1,0 +1,9 @@
+﻿.modal-content {
+    width: 40vh;
+    height: 24vh;
+}
+.modal-content > .modal-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: auto;
+}
