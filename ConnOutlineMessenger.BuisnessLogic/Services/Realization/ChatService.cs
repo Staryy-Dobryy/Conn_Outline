@@ -30,5 +30,25 @@ namespace ConnOutlineMessenger.BuisnessLogic.Services.Realization
             var list = new List<User>() { user1, user2 };
             await _chatRepository.CreateChatWithUsersAsync(list);
         }
+
+        public async Task RemoveUserFromChat(uint userId, uint chatId)
+        {
+            var user = await _userRepository.GetByIdWithDetailsAsync(userId);
+            if (user == null)
+                return;
+
+            if (user.Chats.Any(x => x.Id == chatId))
+            {
+                var chat = user.Chats.First(x => x.Id == chatId);
+                if (chat.Members.Count == 1)
+                    await _chatRepository.DeleteAsync(chatId);
+                
+                else
+                {
+                    user.Chats.Remove(user.Chats.First(x => x.Id == chatId));
+                    await _userRepository.UpdateAsync(user);
+                }
+            }
+        }
     }
 }

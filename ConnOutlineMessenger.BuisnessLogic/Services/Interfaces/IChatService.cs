@@ -10,6 +10,7 @@ namespace ConnOutlineMessenger.BuisnessLogic.Services.Interfaces
     public interface IChatService
     {
         Task<ICollection<Chat>> GetChatsByUserId(uint id);
+        Task RemoveUserFromChat(uint userId, uint chatId);
         Task CreateChat();
     }
 }
