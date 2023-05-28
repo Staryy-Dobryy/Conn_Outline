@@ -107,7 +107,7 @@
 }
 
 #menu-right:hover #menu-items {
-    width: 40vh;
+    width: 40vh;    
 }
 
 #menu-right:hover #menu-items > * {

@@ -244,9 +244,7 @@ body::-webkit-scrollbar-thumb {
     overflow: hidden;
 }
 .conn-header > *{
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
+    line-height: 8vh;
 }
 #chats-content {
     background-color: #353434;

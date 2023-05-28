@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ConnOutlineMessenger.DTO.AddFriendViewModel
+
+@{
     Layout = null;
     ViewData["Title"] = "Conn Outline Messenger";
 }
@@ -10,10 +12,10 @@
             <h2>Добавить друга</h2>
             <span class="close">&times;</span>
         </div>
-        <div class="modal-body">
-            <input type="Text" placeholder="Enter friend ID" class="form-input">
-            <input type="button" class="conn-btn conn-bg-red" value="Add friend" onclick="createChat()">
-        </div>
+        <form asp-controller="Menu" asp-action="AddFriend" id="add-friend" class="modal-body">
+            <input asp-for="userId" type="Text" placeholder="Enter friend ID" class="form-input">
+            <input type="submit" class="conn-btn conn-bg-red" value="Add friend">
+        </form>
     </div>
 </div>
 <script>
@@ -34,4 +36,18 @@
             modal.style.display = "none";
         }
     }
+
+    $(function () {
+        $("#add-friend").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: $("#add-friend").attr('action'),
+                data: $("#add-friend").serialize(),
+                type: 'POST',
+                success: function (data) {
+                    $('body').html(data);
+                }
+            });
+        });
+    });
 </script>

@@ -1,8 +1,6 @@
 ﻿
 
 
-
-
 $(document).ready(function () {
     if (localStorage.getItem("Endpoint")) {
         $.ajax({
@@ -18,7 +16,6 @@ $(document).ready(function () {
         });
     }
 });
-
 
 async function login() {
     var loginData = {
@@ -36,6 +33,12 @@ async function login() {
         }
     });
 }
+function logout() {
+    localStorage.removeItem("Token");
+    localStorage.removeItem("Endpoint");
+    window.location.replace("/");
+}
+
 function loadcart() {
     var targetUrl = "/Chats";
     $.ajax({
@@ -92,8 +95,19 @@ function addFriend() {
         }
     });
 }
-function getdetails(obj) {
-    alert(obj.id);
+function showChat(obj) {
+    var queryData = {
+        stringChatId: obj.id
+    }
+    $.ajax({
+        url: "/Chats/Chat",
+        method: 'get',
+        dataType: "html",
+        data: queryData,
+        success: function (data) {
+            $("body").html(data);
+        }
+    });
 }
 function deleteChat(obj) {
     var queryData = {

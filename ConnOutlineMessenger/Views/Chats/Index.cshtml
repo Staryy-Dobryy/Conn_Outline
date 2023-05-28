@@ -29,9 +29,9 @@
             @foreach (var chat in Model.Chats)
             {
                 <div class="loaded-chat">
-                    <div class="chats-item" id="@chat.Id" onclick="getdetails(this)">
+                    <div class="chats-item" id="@chat.Id" onclick="showChat(this)">
                         <img src="~/images/group-icon.png">
-                        <h5>@chat.CreationTime</h5>
+                        <h5>@chat.ChatName</h5>
                     </div>
                     <input type="button" class="delete-btn" id="@chat.Id" value="delete" onclick="deleteChat(this)">
                 </div>
