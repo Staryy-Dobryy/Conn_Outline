@@ -13,7 +13,8 @@ namespace ConnOutlineMessenger.DataAccess.Interfaces
         Task AddUsersToChatAsync(uint id, IEnumerable<User> users);
         Task CreateChatWithUsersAsync(ICollection<User> users);
         Task AddMessageToChatAsync(uint id, Message message);
-        Task DeleteMessageFromChatAsync(uint chatId, uint messageId);
-        Task<ICollection<Chat>?> GetChatsByUserId(uint id);
+        Task<ICollection<Chat>?> GetChatsByUserIdAsync(uint id);
+        Task<Chat?> GetChatWithDetails(uint chatId);
+        Task<Chat?> GetChatWithMessages(uint chatId);
     }
 }

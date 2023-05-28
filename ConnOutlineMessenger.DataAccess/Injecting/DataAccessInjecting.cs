@@ -24,7 +24,8 @@ namespace ConnOutlineMessenger.BuisnessLogic.Injecting
                 try
                 {
                     var context = serviceProvider.GetRequiredService<DataBaseContext>();
-                    context.Database.EnsureCreated();
+                    //context.Database.EnsureCreated();
+
                 }
                 catch (Exception exception)
                 {
