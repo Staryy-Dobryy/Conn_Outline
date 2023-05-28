@@ -1,4 +1,5 @@
-﻿using ConnOutlineMessenger.Entities;
+﻿using ConnOutlineMessenger.BuisnessLogic.Models;
+using ConnOutlineMessenger.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace ConnOutlineMessenger.BuisnessLogic.Services.Interfaces
 {
     public interface IChatService
     {
-        Task<ICollection<Chat>> GetChatsByUserId(uint id);
+        Task<ICollection<Chat>> GetAllChatsByUserId(uint id);
+        Task<CurrentChatModel?> GetChat(uint userId, uint chatId);
         Task RemoveUserFromChat(uint userId, uint chatId);
         Task CreateChat();
     }

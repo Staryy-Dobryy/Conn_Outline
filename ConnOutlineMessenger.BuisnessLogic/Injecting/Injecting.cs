@@ -15,6 +15,7 @@ namespace ConnOutlineMessenger.BuisnessLogic.Injecting
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IJwtCreationService, JwtCreationService>();
             services.AddTransient<IChatService, ChatService>();
+            services.AddAutoMapper(typeof(AppMappingProfile));
         }
     }
 }
