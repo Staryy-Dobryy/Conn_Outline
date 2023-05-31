@@ -18,10 +18,11 @@
     text-align: center;
     top: 0;
     bottom: 0;
-    margin: auto 1em;
+    margin: auto 0.5em;
 }
 
 #image-feald > img {
+    margin: auto 0.5em;
     width: 7em;
     height: 7em;
 }

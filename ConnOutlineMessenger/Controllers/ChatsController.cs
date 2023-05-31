@@ -23,9 +23,27 @@ namespace ConnOutlineMessenger.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Chat()
+        public async Task<IActionResult> Chat(string stringChatId)
         {
-            return View();
+            string? tokenString = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var token = new JwtSecurityToken(tokenString);
+            var userId = uint.Parse(token.Payload["Id"].ToString());
+            var chatId = uint.Parse(stringChatId);
+            var currentChat = await _chatService.GetChat(userId, chatId);
+
+            return View(currentChat);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Leave(string stringChatId)
+        {
+            string? tokenString = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var token = new JwtSecurityToken(tokenString);
+            var userId = uint.Parse(token.Payload["Id"].ToString());
+            var chatId = uint.Parse(stringChatId);
+            await _chatService.RemoveUserFromChat(userId, chatId);
+            return RedirectToAction("Index", "Chats");
         }
 
         [Authorize]
@@ -35,7 +53,7 @@ namespace ConnOutlineMessenger.Controllers
             string? tokenString = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var token = new JwtSecurityToken(tokenString);
             var userId = uint.Parse(token.Payload["Id"].ToString());
-            var chats = await _chatService.GetChatsByUserId(userId);
+            var chats = await _chatService.GetAllChatsByUserId(userId);
             var viewModel = new ChatsViewModel()
             {
                 Chats = chats

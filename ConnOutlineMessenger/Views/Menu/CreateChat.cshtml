@@ -6,10 +6,14 @@
     <!-- Modal content -->
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Подкорректируйте данные</h2>
+            <h2>Создание чата</h2>
             <span class="close">&times;</span>
         </div>
         <div class="modal-body">
+            <form asp-controller="Menu" asp-action="AddFriend" id="add-friend" class="modal-body">
+                <input asp-for="userId" type="Text" placeholder="Enter chat name" class="form-input">
+                <input type="submit" class="conn-btn conn-bg-red" value="Create">
+            </form>
             <input type="button" class="conn-btn conn-bg-red" value="create" onclick="createChat()">
         </div>
     </div>

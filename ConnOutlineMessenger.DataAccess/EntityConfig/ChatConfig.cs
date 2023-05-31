@@ -11,6 +11,8 @@ namespace ConnOutlineMessenger.EntityConfig
             builder.HasIndex(x => x.Id);
             builder.Property(x => x.Id).IsRequired();
 
+            builder.Property(x => x.ChatName).IsRequired().HasMaxLength(20);
+
             builder
                 .HasMany(x => x.Messages)
                 .WithOne(x => x.CurrentChat)

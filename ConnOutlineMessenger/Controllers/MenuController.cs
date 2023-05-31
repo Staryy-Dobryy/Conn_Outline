@@ -1,4 +1,5 @@
 ﻿using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
+using ConnOutlineMessenger.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,8 +39,9 @@ namespace ConnOutlineMessenger.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult AddFriend(string id)
+        public async Task<IActionResult> AddFriend(AddFriendViewModel model)
         {
+
             return RedirectToAction("Index", "Chats");
         }
     }

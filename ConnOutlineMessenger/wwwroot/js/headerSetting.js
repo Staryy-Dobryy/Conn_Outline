@@ -11,7 +11,7 @@
             401: function () {
                 localStorage.removeItem("Token");
                 localStorage.removeItem("Endpoint");
-                window.location.replace("/Account/Login");
+                window.location.replace("/");
             }
         }
     });

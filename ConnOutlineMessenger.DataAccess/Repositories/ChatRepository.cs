@@ -8,11 +8,7 @@ namespace ConnOutlineMessenger.DataAccess.Repositories
 {
     public class ChatRepository : BaseRepository<Chat>, IChatRepository
     {
-        private readonly IUserRepository _userRepository;
-        public ChatRepository(DataBaseContext db, IUserRepository userRepository) : base(db)
-        {
-            _userRepository = userRepository;
-        }
+        public ChatRepository(DataBaseContext db) : base(db) { }
 
         public async Task AddUserToChatAsync(uint id, User user)
         {
@@ -38,6 +34,7 @@ namespace ConnOutlineMessenger.DataAccess.Repositories
         {
             var chat = new Chat()
             {
+                ChatName = "SomeName",
                 CreationTime = DateTime.Now,
                 Members = users
             };
@@ -54,11 +51,7 @@ namespace ConnOutlineMessenger.DataAccess.Repositories
             }
         }
 
-        public async Task DeleteMessageFromChatAsync(uint chatId, uint messageId)
-        {
-
-        }
-        public async Task<ICollection<Chat>?> GetChatsByUserId(uint id)
+        public async Task<ICollection<Chat>?> GetChatsByUserIdAsync(uint id)
         {
             //Eager loading
             var result = await _db.Set<User>()
@@ -66,6 +59,22 @@ namespace ConnOutlineMessenger.DataAccess.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return result.Chats;
+        }
+
+        public async Task<Chat?> GetChatWithMessages(uint chatId)
+        {
+            return await _db.Set<Chat>()
+                .Include(x => x.Messages)
+                .FirstOrDefaultAsync(x => x.Id == chatId);
+        }
+
+        public async Task<Chat?> GetChatWithDetails(uint chatId)
+        {
+            return await _db.Set<Chat>()
+                .Include(x => x.Members)
+                .Include(x => x.Messages)
+                .ThenInclude(x => x.Sender)
+                .FirstOrDefaultAsync(x => x.Id == chatId);
         }
     }
 }
