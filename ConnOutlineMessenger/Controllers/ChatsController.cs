@@ -1,4 +1,5 @@
 ﻿using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
+using ConnOutlineMessenger.BuisnessLogic.Services.Realization;
 using ConnOutlineMessenger.DTO;
 using ConnOutlineMessenger.Entities;
 using ConnOutlineMessenger.Models;
@@ -14,11 +15,13 @@ namespace ConnOutlineMessenger.Controllers
     {
         private readonly ILogger<ChatsController> _logger;
         private readonly IChatService _chatService;
+        private readonly IJwtTokenService _jwtTokenService;
 
-        public ChatsController (ILogger<ChatsController> logger, IChatService chatService)
+        public ChatsController (ILogger<ChatsController> logger, IChatService chatService, IJwtTokenService jwtTokenService)
         {
             _logger = logger;
             _chatService = chatService;
+            _jwtTokenService = jwtTokenService;
         }
 
         [Authorize]
@@ -26,8 +29,7 @@ namespace ConnOutlineMessenger.Controllers
         public async Task<IActionResult> Chat(string stringChatId)
         {
             string? tokenString = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var token = new JwtSecurityToken(tokenString);
-            var userId = uint.Parse(token.Payload["Id"].ToString());
+            var userId = _jwtTokenService.GetUserIdByToken(tokenString);
             var chatId = uint.Parse(stringChatId);
             var currentChat = await _chatService.GetChat(userId, chatId);
 
@@ -39,8 +41,7 @@ namespace ConnOutlineMessenger.Controllers
         public async Task<IActionResult> Leave(string stringChatId)
         {
             string? tokenString = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var token = new JwtSecurityToken(tokenString);
-            var userId = uint.Parse(token.Payload["Id"].ToString());
+            var userId = _jwtTokenService.GetUserIdByToken(tokenString);
             var chatId = uint.Parse(stringChatId);
             await _chatService.RemoveUserFromChat(userId, chatId);
             return RedirectToAction("Index", "Chats");
@@ -51,8 +52,7 @@ namespace ConnOutlineMessenger.Controllers
         public async Task<IActionResult> Index()
         {
             string? tokenString = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var token = new JwtSecurityToken(tokenString);
-            var userId = uint.Parse(token.Payload["Id"].ToString());
+            var userId = _jwtTokenService.GetUserIdByToken(tokenString);
             var chats = await _chatService.GetAllChatsByUserId(userId);
             var viewModel = new ChatsViewModel()
             {

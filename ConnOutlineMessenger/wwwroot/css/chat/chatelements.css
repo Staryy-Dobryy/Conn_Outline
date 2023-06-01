@@ -1,5 +1,5 @@
 ﻿@media (min-width: 768px) {
-    #message > #message-sender > #delete-button {
+    #message > #message-sender > .delete-button {
         right: 0;
         position: absolute;
         display: none;
@@ -55,7 +55,7 @@
     box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 5px;
     transform: translateY(-1%);
 }
-#message:hover > #message-sender > #delete-button {
+#message:hover > #message-sender > .delete-button {
     display: block;
     opacity: 1;
 }
@@ -76,14 +76,14 @@
     border-radius: 100%;
     box-shadow: 1px 1px 1px;
 }
-#message > #message-sender > #delete-button {
+#message > #message-sender > .delete-button {
     border: none;
     border-radius: 10px;
     background-color: rgba(0,0,0,0);
     transition: 0.2s;
     outline: none;
 }
-#message > #message-sender > #delete-button:hover {
+#message > #message-sender > .delete-button:hover {
     background-color: rgba(255,255,255,0.1);
 }
 #message-content {

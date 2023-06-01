@@ -1,5 +1,6 @@
 ﻿using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
 using ConnOutlineMessenger.BuisnessLogic.Services.Realization;
+using ConnOutlineMessenger.BuisnessLogic.SignalR;
 using ConnOutlineMessenger.DBstur;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +14,7 @@ namespace ConnOutlineMessenger.BuisnessLogic.Injecting
         public static void InjectServices(this IServiceCollection services)
         {
             services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IJwtCreationService, JwtCreationService>();
+            services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddTransient<IChatService, ChatService>();
             services.AddAutoMapper(typeof(AppMappingProfile));
         }

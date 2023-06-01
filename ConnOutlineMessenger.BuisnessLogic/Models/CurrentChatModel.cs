@@ -9,6 +9,7 @@ namespace ConnOutlineMessenger.BuisnessLogic.Models
 {
     public class CurrentChatModel
     {
+        public uint ChatId { get; set; }
         public string ChatName { get; set; }
         public DateTime CreationTime { get; set; }
         public ICollection<User> Members { get; set; }

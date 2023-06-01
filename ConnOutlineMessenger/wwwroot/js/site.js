@@ -1,6 +1,4 @@
 ﻿
-
-
 $(document).ready(function () {
     if (localStorage.getItem("Endpoint")) {
         $.ajax({
@@ -123,6 +121,20 @@ function deleteChat(obj) {
         }
     });
 }
+
+console.log("creation started");
+const hubConnection = new signalR.HubConnectionBuilder()
+    .withUrl("/chat")
+    .build();
+console.log(hubConnection);
+console.log("creation end");
+
+hubConnection.on("Receive", function (message) {
+    console.log("Receive");
+    document.querySelector('#chat-feald').innerHTML += message;
+    block.scrollTop = block.scrollHeight;
+});
+
 
 // modal
 var modal = document.getElementById("myModal");

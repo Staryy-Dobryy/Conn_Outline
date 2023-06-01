@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="text-center">
-    <div id="image-feald">
+    <div id="image-feald" chat-id="@Model.ChatId">
         <img src="~/images/group-icon.png">
         <h2>@Model.ChatName</h2>
     </div>
@@ -19,7 +19,7 @@
                 <img src="~/images/user-icon.png">
                 <h5>Вася</h5>
                 <sub>00.00.0000 15:22</sub>
-                <button id="delete-button">delete</button>
+                <button class="delete-button">delete</button>
             </div>
             <div id="message-content">
                 <p>dsfdsfdsfdsfdsfdsfdsfdsfdsffs ddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsf fsddsfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsf dsfdsfdsfdsf fsddsfdsfdsfds fdsffsddsfdsfdsfdsfdsffsdd sfdsfdsfdsfdsffsddsfdsfdsfdsfdsffsddsffsd</p>
@@ -48,7 +48,7 @@
                         }
                         <h5>@message.Sender.UserName</h5>
                         <sub>@message.SendTime</sub>
-                        <button id="delete-button">delete</button>
+                        <button id="@message.Id" class="delete-button">delete</button>
                     </div>
                     <div id="message-content">
                         <p>@message.MessageText</p>
@@ -63,9 +63,10 @@
     </div>
     <div id="input-feald">
         <div class="input-group mb-3">
-            <input type="text" class="form-input" placeholder="Text">
+            <input type="text" id="getMessage" class="form-input" placeholder="Text">
+            <input type="button" class="conn-btn conn-bg-red" id="sendBtn" value="send">
         </div>
     </div>
 </div>
 
-<script src="~/js/chat.js" asp-append-version="true"></script>
+<script src="~/js/chat.js" asp-append-version="true" type="text/javascript"></script>

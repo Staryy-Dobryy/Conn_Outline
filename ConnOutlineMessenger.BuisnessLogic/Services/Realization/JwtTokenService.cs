@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 
 namespace ConnOutlineMessenger.BuisnessLogic.Services.Realization
 {
-    public class JwtCreationService : IJwtCreationService
+    public class JwtTokenService : IJwtTokenService
     {
         private readonly IUserRepository _userRepository;
-        public JwtCreationService(IUserRepository userRepository)
+        public JwtTokenService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -41,6 +41,13 @@ namespace ConnOutlineMessenger.BuisnessLogic.Services.Realization
 
             return encodedJwt;
         }
+
+        public uint GetUserIdByToken(string tokenString)
+        {
+            var token = new JwtSecurityToken(tokenString);
+            return uint.Parse(token.Payload["Id"].ToString());
+        }
+
         private ClaimsIdentity? GetIdentity(string email, string password)
         {
             var user = _userRepository.GetAll().

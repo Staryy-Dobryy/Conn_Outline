@@ -1,5 +1,6 @@
 using ConnOutlineMessenger.BuisnessLogic.Injecting;
 using ConnOutlineMessenger.BuisnessLogic.Services.Realization;
+using ConnOutlineMessenger.BuisnessLogic.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;
 
+builder.Services.AddSignalR();
 builder.Services.AddDataBase(configuration);
 builder.Services.InjectServices();
 builder.Services.InjectRepositories();
@@ -56,6 +58,8 @@ app.UseRouting();
 // Auth
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/Chat");
 
 app.MapControllerRoute(
     name: "default",
