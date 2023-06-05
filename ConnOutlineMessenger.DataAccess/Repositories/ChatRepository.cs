@@ -30,11 +30,11 @@ namespace ConnOutlineMessenger.DataAccess.Repositories
             }
         }
 
-        public async Task CreateChatWithUsersAsync(ICollection<User> users)
+        public async Task CreateChatWithUsersAsync(string chatName, ICollection<User> users)
         {
             var chat = new Chat()
             {
-                ChatName = "SomeName",
+                ChatName = chatName,
                 CreationTime = DateTime.Now,
                 Members = users
             };

@@ -13,6 +13,6 @@ namespace ConnOutlineMessenger.BuisnessLogic.Services.Interfaces
         Task<ICollection<Chat>> GetAllChatsByUserId(uint id);
         Task<CurrentChatModel?> GetChat(uint userId, uint chatId);
         Task RemoveUserFromChat(uint userId, uint chatId);
-        Task CreateChat();
+        Task CreateChat(CreateChatModel model);
     }
 }

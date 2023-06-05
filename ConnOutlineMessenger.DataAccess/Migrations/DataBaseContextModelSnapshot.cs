@@ -37,6 +37,29 @@ namespace ConnOutlineMessenger.DataAccess.Migrations
                     b.ToTable("ChatUser");
                 });
 
+            modelBuilder.Entity("ConnOutlineMessenger.DataAccess.Entities.Friend", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("FriendUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendUserId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Friends");
+                });
+
             modelBuilder.Entity("ConnOutlineMessenger.Entities.Chat", b =>
                 {
                     b.Property<long>("Id")
@@ -142,9 +165,6 @@ namespace ConnOutlineMessenger.DataAccess.Migrations
                     b.Property<long?>("UserIconId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -155,8 +175,6 @@ namespace ConnOutlineMessenger.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.HasIndex("UserIconId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Users");
                 });
@@ -174,6 +192,17 @@ namespace ConnOutlineMessenger.DataAccess.Migrations
                         .HasForeignKey("MembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ConnOutlineMessenger.DataAccess.Entities.Friend", b =>
+                {
+                    b.HasOne("ConnOutlineMessenger.Entities.User", "FriendUser")
+                        .WithMany("Friends")
+                        .HasForeignKey("FriendUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FriendUser");
                 });
 
             modelBuilder.Entity("ConnOutlineMessenger.Entities.Image", b =>
@@ -207,10 +236,6 @@ namespace ConnOutlineMessenger.DataAccess.Migrations
                     b.HasOne("ConnOutlineMessenger.Entities.Image", "UserIcon")
                         .WithMany()
                         .HasForeignKey("UserIconId");
-
-                    b.HasOne("ConnOutlineMessenger.Entities.User", null)
-                        .WithMany("Friends")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("UserIcon");
                 });

@@ -1,5 +1,6 @@
 using ConnOutlineMessenger.BuisnessLogic.Injecting;
 using ConnOutlineMessenger.BuisnessLogic.Services.Realization;
+using ConnOutlineMessenger.BuisnessLogic.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;
 
+builder.Services.AddSignalR();
 builder.Services.AddDataBase(configuration);
 builder.Services.InjectServices();
 builder.Services.InjectRepositories();
@@ -34,6 +36,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                     ClockSkew = TimeSpan.Zero
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // если запрос направлен хабу
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/Chat"))
+                        {
+                            // получаем токен из строки запроса
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 builder.Services.AddAuthorization();
 
@@ -47,6 +65,7 @@ if (!app.Environment.IsDevelopment())
 
 app.Services.UseDataBase();
 
+app.UseMiddleware<ExaptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -56,6 +75,8 @@ app.UseRouting();
 // Auth
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/Chat");
 
 app.MapControllerRoute(
     name: "default",

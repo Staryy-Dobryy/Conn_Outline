@@ -1,5 +1,6 @@
 ﻿using ConnOutlineMessenger.BuisnessLogic.Services;
 using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
+using ConnOutlineMessenger.BuisnessLogic.Services.Realization;
 using ConnOutlineMessenger.DTO;
 using ConnOutlineMessenger.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,13 @@ namespace ConnOutlineMessenger.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _accountService;
-        private readonly IJwtCreationService _jwtCreationService;
+        private readonly IJwtTokenService _jwtTokenService;
 
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IJwtCreationService jwtCreationService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IJwtTokenService jwtTokenService)
         {
             _accountService = accountService;
             _logger = logger;
-            _jwtCreationService = jwtCreationService;
+            _jwtTokenService = jwtTokenService;
         }
 
         [HttpGet]
@@ -40,7 +41,7 @@ namespace ConnOutlineMessenger.Controllers
             if (ModelState.IsValid)
             {
                 await _accountService.Register(model);
-                return View(model);
+                return RedirectToAction("Login", "Account");
             }
 
             model.Modal = true;
@@ -64,7 +65,7 @@ namespace ConnOutlineMessenger.Controllers
         [HttpPost("/token")]
         public IActionResult Token(string email, string password)
         {
-            var token = _jwtCreationService.CreateToken(email, password);
+            var token = _jwtTokenService.CreateToken(email, password);
             if (token == null)
             {
                 return BadRequest(new { errorText = "Ivalid values" });

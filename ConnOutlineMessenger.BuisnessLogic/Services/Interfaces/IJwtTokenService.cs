@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConnOutlineMessenger.BuisnessLogic.Services.Interfaces
 {
-    public interface IJwtCreationService
+    public interface IJwtTokenService
     {
         string CreateToken(string email, string password);
+        uint GetUserIdByToken(string tokenString);
     }
 }

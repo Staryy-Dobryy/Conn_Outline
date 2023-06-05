@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ConnOutlineMessenger.BuisnessLogic.Models.CreateChatModel
+
+@{
     Layout = null;
     ViewData["Title"] = "Conn Outline Messenger";
 }
@@ -10,11 +12,18 @@
             <span class="close">&times;</span>
         </div>
         <div class="modal-body">
-            <form asp-controller="Menu" asp-action="AddFriend" id="add-friend" class="modal-body">
-                <input asp-for="userId" type="Text" placeholder="Enter chat name" class="form-input">
+            <form asp-controller="Menu" asp-action="CreateChat" id="create-chat" class="modal-body">
+                <input type="Text" asp-for="ChatName" placeholder="Enter chat name" class="form-input">
                 <input type="submit" class="conn-btn conn-bg-red" value="Create">
+                @foreach(var friend in Model.Friends)
+                {
+                    <div class="form-check">
+                        <input id="@friend.Id" class="checkbox-create-chat" name="Members[]" type="checkbox" value="@friend.Id">
+                        <img src="~/images/user-icon.png">
+                        <label for="@friend.Id">@friend.UserName</label>
+                    </div>
+                }
             </form>
-            <input type="button" class="conn-btn conn-bg-red" value="create" onclick="createChat()">
         </div>
     </div>
 </div>
@@ -36,4 +45,27 @@
             modal.style.display = "none";
         }
     }
+
+    $(function () {
+        $("#create-chat").submit(function (event) {
+            var checkboxes = document.getElementsByClassName('checkbox-create-chat');
+            var checkboxesChecked = [];
+            for (var index = 0; index < checkboxes.length; index++) {
+                if (checkboxes[index].checked) {
+                    checkboxesChecked.push(checkboxes[index].value);
+                    alert(checkboxes[index].value);
+                }
+            }
+
+            event.preventDefault();
+            $.ajax({
+                url: $("#create-chat").attr('action'),
+                data: $("#create-chat").serialize(),
+                type: 'POST',
+                success: function (data) {
+                    $('body').html(data);
+                }
+            });
+        });
+    });
 </script>

@@ -39,6 +39,7 @@ namespace ConnOutlineMessenger.BuisnessLogic.Injecting
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IChatRepository, ChatRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IFriendRepository, FriendRepository>();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ConnOutlineMessenger.DataAccess.Interfaces
     {
         Task AddUserToChatAsync(uint id, User user);
         Task AddUsersToChatAsync(uint id, IEnumerable<User> users);
-        Task CreateChatWithUsersAsync(ICollection<User> users);
+        Task CreateChatWithUsersAsync(string chatName, ICollection<User> users);
         Task AddMessageToChatAsync(uint id, Message message);
         Task<ICollection<Chat>?> GetChatsByUserIdAsync(uint id);
         Task<Chat?> GetChatWithDetails(uint chatId);

@@ -12,5 +12,6 @@ namespace ConnOutlineMessenger.DataAccess.Interfaces
         Task<User?> GetByUserNameAsync(string userName);
         Task<User?> GetByEmailAsync(string email);
         Task<User?> GetByIdWithDetailsAsync(uint id);
+        Task<User?> GetByIdWithIconAsync(uint id);
     }
 }

@@ -2,6 +2,6 @@
 {
     public class AddFriendViewModel
     {
-        public string userId { get; set; }
+        public uint UserId { get; set; }
     }
 }
