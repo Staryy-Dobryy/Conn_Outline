@@ -36,12 +36,13 @@ namespace ConnOutlineMessenger.BuisnessLogic.Services.Realization
             return null;
         }
 
-        public async Task CreateChat()
+        public async Task CreateChat(CreateChatModel model)
         {
-            var user1 = await _userRepository.GetByIdAsync(3);
-            var user2 = await _userRepository.GetByIdAsync(4);
-            var list = new List<User>() { user1, user2 };
-            await _chatRepository.CreateChatWithUsersAsync(list);
+            var list = new List<User>();
+            foreach (var id in model.Members)
+                list.Add(await _userRepository.GetByIdAsync(id));
+
+            await _chatRepository.CreateChatWithUsersAsync(model.ChatName, list);
         }
 
         public async Task RemoveUserFromChat(uint userId, uint chatId)

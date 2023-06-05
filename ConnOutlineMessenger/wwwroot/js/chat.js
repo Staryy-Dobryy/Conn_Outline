@@ -6,7 +6,12 @@ try {
         var chat = document.getElementById("image-feald");
         console.log("sendBtn");
         let message = document.getElementById("getMessage").value;
-        hubConnection.invoke("Send", message, chat.getAttribute("chat-id"), localStorage.getItem("Token"))
+        var data = {
+            "messageText": message,
+            "chatId": chat.getAttribute("chat-id"),
+            "token": localStorage.getItem("Token")
+        }
+        hubConnection.invoke("Send", data)
             .then(function () {
                 console.log("hubConnection triggered");
             })
@@ -16,7 +21,7 @@ try {
                     .then(function () {
                         console.log("started");
                         document.getElementById("getMessage").value = "";
-                        hubConnection.invoke("Send", message, chat.getAttribute("chat-id"), localStorage.getItem("Token"))
+                        hubConnection.invoke("Send", data)
                     })
                     .catch(function (err) {
                         return console.error(err.toString());

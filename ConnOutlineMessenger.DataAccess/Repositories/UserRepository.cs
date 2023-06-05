@@ -1,4 +1,5 @@
-﻿using ConnOutlineMessenger.DataAccess.Interfaces;
+﻿using ConnOutlineMessenger.DataAccess.Entities;
+using ConnOutlineMessenger.DataAccess.Interfaces;
 using ConnOutlineMessenger.DBstur;
 using ConnOutlineMessenger.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,14 @@ namespace ConnOutlineMessenger.DataAccess.Repositories
             return await _db.Set<User>()
                 .Include(x => x.Chats)
                 .ThenInclude(x => x.Members)
+                .Include(x => x.UserIcon)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<User?> GetByIdWithIconAsync(uint id)
+        {
+            return await _db.Set<User>()
+                .Include(x => x.UserIcon)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 

@@ -27,6 +27,7 @@ namespace ConnOutlineMessenger.BuisnessLogic.Services.Realization
                 {
                     UserName = model.UserName,
                     Email = model.Email,
+                    UserIcon = new() { Link = "/images/user-icon.png" },
                     Password = HashPasswordTool.HashPassword(model.Password),
                     RegDateTime = DateTime.Now
                 };

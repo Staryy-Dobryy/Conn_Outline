@@ -1,7 +1,9 @@
-﻿using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
+﻿using ConnOutlineMessenger.BuisnessLogic.Models;
+using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
 using ConnOutlineMessenger.DataAccess.Interfaces;
 using ConnOutlineMessenger.DataAccess.Repositories;
 using ConnOutlineMessenger.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -21,40 +23,23 @@ namespace ConnOutlineMessenger.BuisnessLogic.SignalR
             _messageRepository = messageRepository;
             _userRepository = userRepository;
             _jwtTokenService = jwtTokenService;
-        }   
-        public async Task Send(string message, string chatId, string token)
+        }
+        [Authorize]
+        public async Task Send(GetMessageModel model)
         {
+            var userId = _jwtTokenService.GetUserIdByToken(model.Token);
             var messageObj = new Message
             {
-                MessageText = message,
+                MessageText = model.MessageText,
                 SendTime = DateTime.Now,
-                CurrentChatId = uint.Parse(chatId),
-                SenderId = _jwtTokenService.GetUserIdByToken(token),
+                CurrentChatId = uint.Parse(model.ChatId),
+                SenderId = userId,
+                Sender = await _userRepository.GetByIdWithIconAsync(userId)
             };
-            await _messageRepository.CreateAsync(messageObj);
+            var receive = await _messageRepository.CreateAndReturnAsync(messageObj);
+            receive.SendTime = receive.SendTime.ToLocalTime();
 
-            string output = "<div id=\"message\">" +
-                   "<div id=\"message-sender\">";
-            if (sender.UserIcon != null)
-            {
-                output += "<img src=\"@message.Sender.UserIcon.Link\">";
-            }
-            else
-            {
-                output += "<img src=\"/images/user-icon.png\">";
-            }
-            output += $"<h5>{sender.UserName}</h5>" +
-                $"<sub>{DateTime.Now}</sub>" +
-                "<button id=\"@message.Id\" class=\"delete-button\">delete</button></div>" +
-                "<div id=\"message-content\">" +
-                $"<p>{message}</p>";
-
-            /*if (message.MessageImg != null)
-            {
-                output += <img src="@message.MessageImg">
-            }*/
-            output += "</div></div>";
-            await Clients.All.SendAsync("Receive", output);
+            await Clients.All.SendAsync("Receive", receive);
         }
     }
 }

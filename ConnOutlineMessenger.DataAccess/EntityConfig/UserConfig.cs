@@ -18,6 +18,12 @@ namespace ConnOutlineMessenger.EntityConfig
             builder
                 .HasMany(x => x.Chats)
                 .WithMany(x => x.Members);
+
+            builder
+                .HasMany(x => x.Friends)
+                .WithOne(x => x.FriendUser)
+                .HasForeignKey(x => x.FriendUserId)
+                .HasPrincipalKey(x => x.Id);
         }
     }
 }

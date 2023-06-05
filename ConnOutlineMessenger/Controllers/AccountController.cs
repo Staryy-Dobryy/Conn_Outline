@@ -41,7 +41,7 @@ namespace ConnOutlineMessenger.Controllers
             if (ModelState.IsValid)
             {
                 await _accountService.Register(model);
-                return View(model);
+                return RedirectToAction("Login", "Account");
             }
 
             model.Modal = true;

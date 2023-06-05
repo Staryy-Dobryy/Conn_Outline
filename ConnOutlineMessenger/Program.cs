@@ -36,6 +36,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                     ClockSkew = TimeSpan.Zero
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // если запрос направлен хабу
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/Chat"))
+                        {
+                            // получаем токен из строки запроса
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 builder.Services.AddAuthorization();
 
@@ -49,6 +65,7 @@ if (!app.Environment.IsDevelopment())
 
 app.Services.UseDataBase();
 
+app.UseMiddleware<ExaptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

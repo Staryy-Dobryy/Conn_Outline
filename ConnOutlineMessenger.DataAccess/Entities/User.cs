@@ -1,4 +1,6 @@
-﻿namespace ConnOutlineMessenger.Entities
+﻿using ConnOutlineMessenger.DataAccess.Entities;
+
+namespace ConnOutlineMessenger.Entities
 {
     public class User : IdColumn
     {
@@ -7,7 +9,7 @@
         public string UserName { get; set; }
         public DateTime RegDateTime { get; set; }
         public virtual Image? UserIcon { get; set; }
-        public virtual ICollection<User>? Friends { get; set; }
+        public virtual ICollection<Friend>? Friends { get; set; }
         public virtual ICollection<Chat>? Chats { get; set; }
     }
 }

@@ -10,6 +10,13 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $("body").html(data);
+            },
+            statusCode: {
+                401: function () {
+                    localStorage.removeItem("Token");
+                    localStorage.removeItem("Endpoint");
+                    window.location.replace("/");
+                }
             }
         });
     }
@@ -122,19 +129,59 @@ function deleteChat(obj) {
     });
 }
 
+function deleteChat(obj) {
+    var queryData = {
+        stringChatId: obj.id
+    }
+    $.ajax({
+        url: "/Chats/Leave",
+        method: 'post',
+        dataType: "html",
+        data: queryData,
+        success: function (data) {
+            $("body").html(data);
+        }
+    });
+}
+
+function friends() {
+    $.ajax({
+        url: "/Menu/Friends",
+        method: 'get',
+        dataType: "html",
+        success: function (data) {
+            $("body").html(data);
+        }
+    });
+}
+
 console.log("creation started");
 const hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl("/chat")
+    .withUrl("/Chat", { accessTokenFactory: () => localStorage.getItem("Token") })
     .build();
 console.log(hubConnection);
 console.log("creation end");
 
 hubConnection.on("Receive", function (message) {
-    console.log("Receive");
-    document.querySelector('#chat-feald').innerHTML += message;
+    var now = new Date(message["sendTime"]).toLocaleString();
+
+    var newDiv = '<div id="message"><div id="message-sender">';
+    if (message["sender"]["userIcon"] === null) {
+        newDiv += '<img src="/images/user-icon.png">';
+    }
+    else {
+        newDiv += '<img src="' + message["sender"]["userIcon"]["link"] + '">';
+    }
+    newDiv += '<h5>' + message["sender"]["userName"] + '</h5>';
+    newDiv += '<sub>' + now.replace(",", "") + '</sub>';
+    newDiv += '<button id="' + message["id"] +'" class="delete-button">delete</button>';
+    newDiv += '</div>';
+    newDiv += '<div id="message-content"><p>' + message["messageText"] + '</p></div>';
+    newDiv += '</div>';
+
+    document.querySelector('#chat-feald').innerHTML += newDiv;
     block.scrollTop = block.scrollHeight;
 });
-
 
 // modal
 var modal = document.getElementById("myModal");

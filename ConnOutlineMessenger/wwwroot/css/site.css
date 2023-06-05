@@ -69,6 +69,7 @@ body::-webkit-scrollbar-thumb {
     border: 1px solid rgba(0, 0, 0, 0.3);
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)
 }
+
 .form-input:focus {
     outline: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -96,7 +97,18 @@ body::-webkit-scrollbar-thumb {
     margin-bottom: 1em;
 }
 .form-check{
+    display: inline-flex;
+    width: 100%;
     text-align: left;
+}
+.form-check > * {
+    margin: auto 0.2em;
+}
+.form-check > img{
+    width: 2em;
+    height: 2em;
+    border-radius: 100%;
+    box-shadow: 1px 1px 1px;
 }
 
 
@@ -138,6 +150,7 @@ body::-webkit-scrollbar-thumb {
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
     animation-duration: 0.4s;
+    overflow: auto;
 }
 
 .close {

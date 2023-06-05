@@ -9,5 +9,6 @@ namespace ConnOutlineMessenger.DataAccess.Interfaces
 {
     public interface IMessageRepository : IRepository<Message>
     {
+        Task<Message> CreateAndReturnAsync(Message messageEntity);
     }
 }

@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace ConnOutlineMessenger.BuisnessLogic.Services.Interfaces
 {
-    public interface IChatService
+    public interface IFriendsService
     {
-        Task<ICollection<Chat>> GetAllChatsByUserId(uint id);
-        Task<CurrentChatModel?> GetChat(uint userId, uint chatId);
-        Task RemoveUserFromChat(uint userId, uint chatId);
-        Task CreateChat(CreateChatModel model);
+        Task AddFriend(uint userId, uint friendId);
+        Task DeleteFriend(uint userId, uint friendId);
+        Task<ICollection<User>> GetFriendsByUserIdAsync(uint userId);
     }
 }

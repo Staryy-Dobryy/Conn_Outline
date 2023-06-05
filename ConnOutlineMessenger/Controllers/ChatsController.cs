@@ -1,11 +1,14 @@
-﻿using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
+﻿using ConnOutlineMessenger.BuisnessLogic.Models;
+using ConnOutlineMessenger.BuisnessLogic.Services.Interfaces;
 using ConnOutlineMessenger.BuisnessLogic.Services.Realization;
+using ConnOutlineMessenger.BuisnessLogic.SignalR;
 using ConnOutlineMessenger.DTO;
 using ConnOutlineMessenger.Entities;
 using ConnOutlineMessenger.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -17,7 +20,7 @@ namespace ConnOutlineMessenger.Controllers
         private readonly IChatService _chatService;
         private readonly IJwtTokenService _jwtTokenService;
 
-        public ChatsController (ILogger<ChatsController> logger, IChatService chatService, IJwtTokenService jwtTokenService)
+        public ChatsController (ILogger<ChatsController> logger, IChatService chatService, IJwtTokenService jwtTokenService, IHubContext<ChatHub> hubContext)
         {
             _logger = logger;
             _chatService = chatService;
@@ -60,7 +63,6 @@ namespace ConnOutlineMessenger.Controllers
             };
             return View(viewModel);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
